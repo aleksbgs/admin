@@ -31,7 +31,7 @@ func Register(c *fiber.Ctx) error {
 		FirstName: data["first_name"],
 		LastName:  data["last_name"],
 		Email:     data["email"],
-		RoleId:    1,
+		RoleId:    2,
 	}
 
 	user.SetPassword(data["password"])

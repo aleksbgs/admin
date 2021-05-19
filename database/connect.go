@@ -15,7 +15,7 @@ func Connect() {
 	if err != nil {
 		panic("Could not connect to the database")
 	}
-	migration := database.AutoMigrate(&models.User{}, models.Role{}, models.Permission{})
+	migration := database.AutoMigrate(&models.User{}, models.Role{}, models.Permission{},models.Product{})
 
 	DB = database
 
