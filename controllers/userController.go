@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"../database"
+	"../middleware"
 	"../models"
 	"../util"
 	"github.com/gofiber/fiber"
@@ -10,11 +11,20 @@ import (
 
 func AllUsers(c *fiber.Ctx) error {
 
+	if err := middleware.IsAuthorized(c, "users"); err != nil {
+		return err
+	}
+
 	page, _ := strconv.Atoi(c.Query("page", "1"))
 
 	return c.JSON(models.Paginate(database.DB, &models.User{}, page))
 }
 func CreateUser(c *fiber.Ctx) error {
+
+	if err := middleware.IsAuthorized(c, "users"); err != nil {
+		return err
+	}
+
 	var user models.User
 
 	if err := c.BodyParser(&user); err != nil {
@@ -26,6 +36,10 @@ func CreateUser(c *fiber.Ctx) error {
 	return c.JSON(user)
 }
 func GetUser(c *fiber.Ctx) error {
+	if err := middleware.IsAuthorized(c, "users"); err != nil {
+		return err
+	}
+
 	id, _ := strconv.Atoi(c.Params("id"))
 
 	user := models.User{

@@ -2,12 +2,17 @@ package controllers
 
 import (
 	"../database"
+	"../middleware"
 	"../models"
 	"github.com/gofiber/fiber"
 	"strconv"
 )
 
 func AllProducts(c *fiber.Ctx) error {
+
+	if err := middleware.IsAuthorized(c, "products"); err != nil {
+		return err
+	}
 
 	page, _ := strconv.Atoi(c.Query("page", "1"))
 

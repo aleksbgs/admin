@@ -73,3 +73,20 @@ func CreateFile(filePath string) error {
 	}
 	return nil
 }
+type User1 struct {
+	Id        uint `json:"id"`
+	FirstName string `json:"first_name"`
+	LastName  string
+	Email     string
+	Password  []byte
+	RoleId    uint
+}
+func Chart(c *fiber.Ctx) error {
+
+	var users []User1
+
+	database.DB.Raw(
+		`select * from users`,
+	).Scan(&users)
+	return c.JSON(users)
+}
